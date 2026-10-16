@@ -1,214 +1,96 @@
-# 📈 Apple Inc. (AAPL) Historical Stock Market Analysis Using Python
+# 📈 Apple Inc. (AAPL) Historical Stock Market Analysis Using Python 
 
-## 📌 Project Overview
+**Week 6 Internship Project | AnalystLab Africa (Batch B, 1 June to 1 August 2026)**
+**Author:** Danjuma Zainab
 
-This project was completed as part of **Week 6 of the AnalystLab Africa Batch B Internship Program (1st June – 1st August 2026)**.
+Can five years of Apple stock data show how the price trends, when trading spikes, how risky the stock is, and which months behave differently? This project answers those questions with Python.
 
-The objective of this project was to analyze **Apple Inc. (AAPL) historical stock market data** using Python by applying advanced data transformation, time-series analysis, feature engineering, and data visualization techniques to uncover meaningful insights into stock performance.
+## The Business Problem
 
----
+Investors and analysts need clear, data-backed answers on trend, trading activity, risk and seasonality before deciding when to hold, trim or add exposure to a stock.
 
-## 🎯 Project Objectives
+## Dataset
 
-- Clean and preprocess historical stock market data.
-- Perform advanced data transformation using Pandas.
-- Conduct time-series analysis on stock prices.
-- Engineer new features to improve analysis.
-- Create insightful visualizations.
-- Generate actionable business insights and recommendations.
+- **Source:** Yahoo Finance via the `yfinance` library
+- **Period:** 6 Aug 2021 to 4 Aug 2026 (5 years)
+- **Size:** 1,253 trading days after cleaning
+- **Columns:** Date, Open, High, Low, Close, Adj Close, Volume
 
----
+## Tools
 
-## 📂 Dataset Information
+Python, Pandas, NumPy, Matplotlib, yfinance, Jupyter Notebook
 
-- **Dataset:** Apple Inc. (AAPL) Historical Stock Data
-- **Source:** Yahoo Finance
-- **Period:** Five Years
-- **Records:** 1,252
-- **Features:**
-  - Date
-  - Open Price
-  - High Price
-  - Low Price
-  - Close Price
-  - Adjusted Close Price
-  - Trading Volume
+## Data Cleaning
 
----
+The raw file loaded as 1,254 rows x 8 columns with every price column stored as text.
 
-## 🛠 Tools & Technologies
+1. Removed the stray first row (the ticker "AAPL" repeated in every column) added by yfinance
+2. Dropped the redundant `index` column
+3. Converted Open, High, Low, Close and Adj Close to numeric, and Volume to integer
+4. Converted `Date` to datetime
+5. Checked for missing values (none remained)
+6. Sorted the data chronologically
+7. Final dataset: **1,253 rows x 7 columns**
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- yfinance
-- Jupyter Notebook
+## Feature Engineering
 
----
+| Feature | Definition |
+|---|---|
+| Daily Price Change | Close - Open |
+| Percentage Price Change | (Close - Open) / Open x 100 |
+| Year, Month, Month Number | Extracted from Date |
+| 7-Day and 30-Day Moving Average | Rolling mean of Close |
+| Volatility | 30-day rolling standard deviation of Percentage Price Change |
 
-## 📊 Project Workflow
+## Key Statistics
 
-### 1. Data Loading
+| Metric | Value |
+|---|---|
+| Average close | $199.12 (median $187.87) |
+| Highest close | $340.08 on 28 Jul 2026 |
+| Lowest close | $125.02 on 5 Jan 2023 |
+| Highest volume | 318.68M shares on 20 Sep 2024 |
+| Average daily change | 0.12% (std. dev. 1.50%) |
+| 30-day volatility | Average 1.40%, range 0.64% to 3.87% |
 
-- Imported required Python libraries.
-- Downloaded Apple historical stock data using the **yfinance** library.
-- Loaded the dataset into a Pandas DataFrame.
+## Insights
 
----
+1. **The price more than doubled.** Apple rose from $146.14 (Aug 2021) to a peak of $340.08 (28 Jul 2026), about +133%, and closed above both its 7-day ($330.27) and 30-day ($310.46) averages at the peak, showing a sustained uptrend rather than a one-day spike.
+2. **The 2023 low was followed by a strong recovery.** The close bottomed at $125.02 on 5 Jan 2023, below its 30-day average of $138.49 during the broad 2022 sell-off, then climbed about 172% to the peak.
+3. **The heaviest trading day was not a big price day.** Volume hit 318.68M on 20 Sep 2024, over five times the median, yet price moved only -0.77%, pointing to a mechanical event such as index rebalancing or options expiry rather than company news.
+4. **Risk arrives in bursts.** 30-day volatility averaged 1.40% but ranged from 0.64% to 3.87%, with 75% of readings below 1.70%, because market-wide shocks hit in short clusters while calm periods dominate.
+5. **July, November and October were the strongest months** (+0.32%, +0.28%, +0.25% average daily gain) while September was weakest (-0.14%), though five years of data is too short to treat this as proven.
 
-### 2. Data Exploration
+## Recommendations
 
-Performed exploratory analysis by:
+1. **Use moving averages as a trend filter:** treat price above the 30-day average as confirmation, and a close below it as a prompt to review.
+2. **Read volume together with price:** flat-price volume spikes are usually mechanical, not signals.
+3. **Size positions by volatility:** consider reducing exposure when 30-day volatility rises above about 1.70%.
+4. **Do not trade on seasonality alone:** validate on 10+ years of data and close-to-close returns first.
+5. **Extend the analysis:** benchmark against the S&P 500, add RSI and Bollinger Bands, and backtest any rule.
 
-- Viewing the dataset
-- Checking dataset dimensions
-- Examining data types
-- Generating summary statistics
-- Identifying missing values
+## Visualizations
 
----
+The notebook produces: closing price trend, trading volume trend, closing price with 7- and 30-day moving averages, daily percentage change, average monthly percentage change, and 30-day volatility.
 
-### 3. Data Cleaning
+## Repository Structure
 
-The following preprocessing steps were performed:
-
-- Removed unnecessary columns
-- Converted the Date column to datetime format
-- Converted numeric columns to appropriate data types
-- Sorted data chronologically
-- Verified missing values
-
----
-
-### 4. Data Transformation
-
-Created additional variables including:
-
-- Daily Price Change
-- Percentage Price Change
-- Year
-- Month
-- Month Number
-
-These transformations improved the dataset for further analysis.
-
----
-
-### 5. Time-Series Analysis
-
-Performed time-series analysis including:
-
-- Closing Price Trend
-- Trading Volume Trend
-- 7-Day Moving Average
-- 30-Day Moving Average
-- Daily Percentage Price Change
-
----
-
-### 6. Feature Engineering
-
-Created the following analytical features:
-
-- Daily Price Change
-- Percentage Price Change
-- 7-Day Moving Average
-- 30-Day Moving Average
-- Monthly Returns
-- 30-Day Volatility
-- Year
-- Month
-- Month Number
-
----
-
-## 📈 Visualizations
-
-The project includes the following visualizations:
-
-- 📊 Apple Stock Closing Price Trend
-- 📊 Trading Volume Trend
-- 📊 Closing Price vs 7-Day & 30-Day Moving Averages
-- 📊 Daily Percentage Price Change
-- 📊 Monthly Average Returns
-- 📊 30-Day Stock Volatility
-
----
-
-## 🔍 Key Findings
-
-- Apple experienced an overall upward trend during the analysis period.
-- Daily price fluctuations reflected normal stock market volatility.
-- The 7-day moving average highlighted short-term trends, while the 30-day moving average captured long-term price movements.
-- Trading volume varied considerably, indicating changes in investor activity.
-- Monthly returns differed across the year, showing seasonal variation in stock performance.
-- Volatility analysis identified periods of both market stability and increased uncertainty.
-
----
-
-## 💡 Recommendations
-
-- Monitor moving averages to identify emerging market trends.
-- Combine trading volume analysis with price movements for better investment decisions.
-- Use volatility measures to evaluate investment risk.
-- Perform regular time-series analysis to support data-driven financial decisions.
-
----
-
-## 📁 Repository Structure
-
-```text
-Apple-Stock-Analysis/
-│
-├── Data/
-│   └── AAPL_Historical_Data.csv
-│
-├── Notebook/
-│   └── AAPL_Stock_Analysis.ipynb
-│
-├── Images/
-│   ├── Closing_Price_Trend.png
-│   ├── Trading_Volume_Trend.png
-│   ├── Moving_Averages.png
-│   ├── Daily_Percentage_Change.png
-│   ├── Monthly_Returns.png
-│   └── Stock_Volatility.png
-│
-├── Report/
-│   └── Insight_Summary.pdf
-│
+```
+.
+├── AAPL_Stock_Analysis.ipynb   # Full analysis notebook
+├── AAPL_Historical_Data.csv    # Downloaded dataset
+├── AAPL_Stock_Analysis_Report.pdf
 └── README.md
 ```
 
----
+## How to Run
 
-## 🚀 Skills Demonstrated
+```bash
+pip install yfinance pandas numpy matplotlib jupyter
+jupyter notebook AAPL_Stock_Analysis.ipynb
+```
 
-- Python Programming
-- Pandas Data Manipulation
-- Data Cleaning
-- Data Transformation
-- Time-Series Analysis
-- Feature Engineering
-- Data Visualization
-- Financial Data Analysis
-- Business Insight Generation
+## Disclaimer
 
----
+This project is for learning purposes only and is not financial advice.
 
-## 👩‍💻 Author
-
-**Danjuma Zainab**
-
-Data Analyst | Python | SQL | Excel | Power BI
-
----
-
-## 🙏 Acknowledgements
-
-This project was completed as part of the **Week 6 Internship Project** under the **AnalystLab Africa Batch B Internship Program**, providing hands-on experience in Python-based financial data analysis and time-series analytics.
-
----
-
-⭐ If you found this project helpful, feel free to star this repository!
