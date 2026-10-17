@@ -77,10 +77,12 @@ The notebook produces: closing price trend, trading volume trend, closing price 
 
 ```
 .
-├── AAPL_Stock_Analysis.ipynb   # Full analysis notebook
+├── Images   
 ├── AAPL_Historical_Data.csv    # Downloaded dataset
 ├── AAPL_Stock_Analysis_Report.pdf
+├── AAPL_Stock_Analysis.ipynb    # Full analysis notebook
 └── README.md
+
 ```
 
 ## How to Run
